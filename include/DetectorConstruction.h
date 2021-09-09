@@ -1,14 +1,16 @@
 #pragma once
 
 #include "G4VUserDetectorConstruction.hh"
+#include "G4NistManager.hh"
 
 class Detector : public G4VUserDetectorConstruction
 {
 public:
+    Detector(/*G4double RIndex*/);
+    virtual ~Detector();
+
     G4VPhysicalVolume *Construct() override;
 
-private://methods
-
-    void DefineMaterials();
-
+protected:
+    G4LogicalVolume*  fScoringVolume;  
 };

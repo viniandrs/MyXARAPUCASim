@@ -10,7 +10,6 @@
 #include "G4SubtractionSolid.hh"
 #include "G4LogicalSkinSurface.hh"
 #include "CLHEP/Units/SystemOfUnits.h"
-using namespace CLHEP;
 
 #include "../include/SensorDetector.h"
 #include "G4MaterialPropertiesTable.hh"
@@ -19,8 +18,10 @@ using namespace CLHEP;
 #include "G4OpticalSurface.hh"
 #include "G4LogicalBorderSurface.hh"
 
+using namespace CLHEP;
+
 //Constructor for member initializers
-Detector::Detector() : fScoringVolume(0){}
+Detector::Detector() : G4VUserDetectorConstruction(), fScoringVolume(0){}
 
 G4VPhysicalVolume *Detector::Construct()
 {   
@@ -558,5 +559,4 @@ G4VPhysicalVolume *Detector::Construct()
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     The End    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
     return physWorld;
-
 }

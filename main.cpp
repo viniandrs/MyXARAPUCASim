@@ -3,7 +3,7 @@
 using namespace std;
 
 #include "include/DetectorConstruction.h"
-#include "include/MyGenerator.h"
+#include "include/PrimaryGeneratorAction.h"
 
 #include "G4RunManager.hh"
 #include "G4VUserPhysicsList.hh"
@@ -18,8 +18,8 @@ using namespace std;
 #include "G4OpticalPhysics.hh"
 
 //Calling the User Action classes
-#include "include/MyRunAction.h"
-#include "include/MyEventAction.h"
+#include "include/RunAction.h"
+#include "include/EventAction.h"
 
 int main(int argc, char **argv)
 {
@@ -34,13 +34,13 @@ int main(int argc, char **argv)
     runManager->SetUserInitialization(physicsList);
 
     // User initialization classes
-    runManager->SetUserAction(new MyPrimaryGenerator());
+    runManager->SetUserAction(new PrimaryGeneratorAction());
     runManager->SetUserInitialization(new Detector());
     runManager->SetUserInitialization(physicsList);
 
     //We need to supply the Run Manager with our User Action classes before initializing
-    runManager->SetUserAction(new MyRunAction());
-    runManager->SetUserAction(new MyEventAction());
+    runManager->SetUserAction(new RunAction());
+    runManager->SetUserAction(new EventAction());
 
     runManager->Initialize();
 

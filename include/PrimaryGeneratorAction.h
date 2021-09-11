@@ -3,6 +3,8 @@
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4ParticleGun.hh"
 
+extern G4bool flag_generate;  
+
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:

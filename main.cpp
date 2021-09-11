@@ -34,13 +34,14 @@ int main(int argc, char **argv)
     runManager->SetUserInitialization(physicsList);
 
     // User initialization classes
-    runManager->SetUserAction(new PrimaryGeneratorAction());
     runManager->SetUserInitialization(new Detector());
     runManager->SetUserInitialization(physicsList);
 
     //We need to supply the Run Manager with our User Action classes before initializing
     runManager->SetUserAction(new RunAction());
+    runManager->SetUserAction(new PrimaryGeneratorAction());
     runManager->SetUserAction(new EventAction());
+    runManager->SetUserAction(/*stepping action*/)
 
     runManager->Initialize();
 

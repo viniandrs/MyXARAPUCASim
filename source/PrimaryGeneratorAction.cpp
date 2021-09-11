@@ -85,5 +85,5 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent)
     m_newGun->GeneratePrimaryVertex(anEvent);
 
     flag_alpha = true;
-    //flag_generate = true;
+    flag_generate = true;
 }

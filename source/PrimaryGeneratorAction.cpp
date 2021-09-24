@@ -8,7 +8,8 @@
 using namespace CLHEP;
 using namespace std;
 
-PrimaryGeneratorAction::PrimaryGeneratorAction() {}
+PrimaryGeneratorAction::PrimaryGeneratorAction() : G4VUserPrimaryGeneratorAction(), 
+                                                   m_newGun(new G4ParticleGun()) {} //Instantiating our particle gun
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
@@ -18,7 +19,6 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent)
 {
     //------------------- Random initial position of the particles -------------------
-    
     //ENTENDER ESSES TREM
     G4double H_b = 43.5 * cm;
     G4double esp = 20.0 * mm;
@@ -38,7 +38,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent)
     G4double x0 = myraio * costeta;
     G4double z0 = myraio * sinteta + 0.5 * (-0.5 * H_b + 0.5 * espessura_maior + dif_h - esp);
     G4double y0 = 3.0 * cm - 140 * (G4UniformRand() - 0.5) * um;
-
+    
     //the initial position of the particle
     m_newGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
 

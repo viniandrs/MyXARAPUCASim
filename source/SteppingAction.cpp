@@ -1,6 +1,6 @@
-#include "SteppingAction.h"
-#include "Constants.h"
-#include "PrimaryGeneratorAction.h"
+#include "../include/SteppingAction.h"
+#include "../include/Constants.h"
+#include "../include/PrimaryGeneratorAction.h"
 
 #include "G4Step.hh"
 #include "G4Track.hh"
@@ -51,10 +51,9 @@ SteppingAction::~SteppingAction() {}
 
 void SteppingAction::UserSteppingAction(const G4Step *aStep)
 {
-
     G4AnalysisManager *analysisManager = G4AnalysisManager::Instance();
 
-    //============================ Collecting information about the Step ============================ 
+    //============================ Collecting information about the Step ============================
     fEventNumber = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
 
     //Position
@@ -65,14 +64,16 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
     //Track information
     G4Track *track = aStep->GetTrack();
 
-    G4String parti = track->GetDefinition()->GetParticleName();
+    G4String particle = track->GetDefinition()->GetParticleName();
     G4String materia = track->GetMaterial()->GetName();
     const G4VProcess *creator = track->GetCreatorProcess();
     const G4DynamicParticle *dynParticle = track->GetDynamicParticle();
     G4double kinEnergy = track->GetKineticEnergy(); // Kinetic Energy of the track
+
     /*G4double MomentumDirection = track -> GetMomentumDirection();  // Direction of momentum  (should be an unit vector)
     //G4double Momentum = track -> GetMomentum(); // Total momentum of the track
      ->SEE WHY IS NOT WORKING*/
+     
     G4double TotalEnergy = track->GetTotalEnergy(); // Total energy of the track
 
     //PreStep Info
@@ -96,7 +97,6 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
     G4String processName = aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
 
     bool flag_alpha = true;
-    //G4bool flag_generate = true;
 
     G4int a = 0;
     G4int b = 100;
@@ -107,7 +107,7 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
     G4ThreeVector Pos_momentum;
 
     //G4cout << trackID << G4endl;
-    if (parti == "alpha")
+    if (particle == "alpha")
     {
         initial_energy = kinEnergy / MeV + edep;
         if (flag_generate == true)
@@ -126,23 +126,6 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
                         contadorPhotons2 = contadorPhotons2 + 1;
                     }
                     analysisManager->FillH1(3, contadorPhotons1 + contadorPhotons2);
-
-                    /*
-                    if( contadorPhotons != contadorEnergia){
-                    G4cout << " WARNING ************ Contador = " << contadorPhotons << " ID = " << contadorEnergia << " event = " << fEventNumber << G4endl;
-                    }
-
-                    if(contadorPhotons < (3620*myEnergy-1000)){
-                        G4cout << " WARNING 2 ************ Contador = " << contadorPhotons << " myEnergy = " << myEnergy << " event = " << fEventNumber << G4endl;
-                    }
-                    else{
-                        //cout << myEnergy << endl;
-                    }
-		    if(fEventNumber>=a && fEventNumber<=b){
-                    	G4cout << " Registrando energia = " << myEnergy << " contagem = " << contadorPhotons << G4endl;
-
-            	    }
-		    */
                     analysisManager->FillH1(2, myEnergy);
                     analysisManager->FillNtupleDColumn(0, contadorPhotons1);                    //preenche o branch da TTree
                     analysisManager->FillNtupleDColumn(1, contadorPhotons2);                    //preenche o branch da TTree
@@ -152,10 +135,7 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
                     analysisManager->FillNtupleDColumn(5, y);
                     analysisManager->FillNtupleDColumn(6, z);
                     analysisManager->AddNtupleRow(1);
-                    //G4cout << "finished num. de fotons =" << contadorPhotons << G4endl;
-                    //G4cout << "energia total de fotons =" << contadorEnergia/MeV << G4endl;
                 }
-                //cout << "zerando" << endl;
                 contadorEnergia = 0;
                 contadorPhotons1 = 0;
                 contadorPhotons2 = 0;
@@ -181,14 +161,14 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
             temp_edep = edep;
         }
 
-        //G4cout << parti << " Initial Energy = " << initial_energy << "; KE = "<< kinEnergy/MeV << "; Edep = " << edep << "; preVol = "<< PreVolName << "; postVol = "<< PostVolName << "; processo = " << processName << " eventID = " << fEventNumber << " ID = " << trackID << G4endl;
+        //G4cout << particle << " Initial Energy = " << initial_energy << "; KE = "<< kinEnergy/MeV << "; Edep = " << edep << "; preVol = "<< PreVolName << "; postVol = "<< PostVolName << "; processo = " << processName << " eventID = " << fEventNumber << " ID = " << trackID << G4endl;
 
         isAlpha = true;
     }
 
     if (creator)
     {
-        if (parti == "opticalphoton")
+        if (particle == "opticalphoton")
         {
 
             if (PreVolName == "detector1" || PreVolName == "detector2")
@@ -244,24 +224,27 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
                 G4String creatorName = creator->GetProcessName();
                 //G4cout << "Debuga fdp ... " << creatorName << G4endl;
                 /*if(fEventNumber>=a && fEventNumber<=b){
-                 *       G4cout << "Particle " << parti << " created by " << creatorName << G4endl;
-                 *       G4cout << parti << "; preVol = "<< PreVolName << "; postVol = "<< PostVolName << "; processo = " << processName << " eventID = " << fEventNumber << " ID = " << trackID << G4endl;
+                 *       G4cout << "particlecle " << particle << " created by " << creatorName << G4endl;
+                 *       G4cout << particle << "; preVol = "<< PreVolName << "; postVol = "<< PostVolName << "; processo = " << processName << " eventID = " << fEventNumber << " ID = " << trackID << G4endl;
             }*/
             }
         }
     }
     else
     {
-        if (parti != "alpha")
+        if (particle != "alpha")
         {
             cout << "Particle without creator" << endl;
-            G4cout << parti << " Energy = " << kinEnergy / eV << "; KE = " << kinEnergy / eV << "; Edep = " << edep << "; preVol = " << PreVolName << "; postVol = " << PostVolName << "; processo = " << processName << " eventID = " << fEventNumber << " ID = " << trackID << G4endl;
+            G4cout << particle << " Energy = " << kinEnergy / eV << "; KE = " << kinEnergy / eV << "; Edep = " << edep << "; preVol = " << PreVolName << "; postVol = " << PostVolName << "; processo = " << processName << " eventID = " << fEventNumber << " ID = " << trackID << G4endl;
         }
     }
 
-    if (flag_generate == true && parti == "alpha")
+    if (flag_generate == true && particle == "alpha")
     {
         //G4cout << "começo de um evento: gera uma alpha" << G4endl;
         flag_generate = false;
     }
+
+    G4cout << "\n ####################### Stepping action OK! ####################### \n"
+           << G4endl;
 }

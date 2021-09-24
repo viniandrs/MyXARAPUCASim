@@ -6,7 +6,7 @@
 class Detector : public G4VUserDetectorConstruction
 {
 public:
-    Detector(/*G4double RIndex*/);
+    Detector();
     ~Detector();
 
     G4VPhysicalVolume *Construct() override;

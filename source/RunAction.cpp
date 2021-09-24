@@ -26,8 +26,7 @@ RunAction::~RunAction() {
 
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
 
-
-    G4cout << "========= Run beggining =========\n Starting run " << aRun->GetRunID() << " with " 
+    G4cout << "========= Run beggining =========\nStarting run " << aRun->GetRunID() << " with " 
     << aRun->GetNumberOfEventToBeProcessed() << " events being processed" << G4endl;
 
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
@@ -47,7 +46,7 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
     analysisManager->CreateH1 ("h2","Alpha Spectrum",100,-1.0, 6.0); //2
     analysisManager->CreateH1 ("h3","Photons/Alpha",250,0,7000); //3
     // // Indica o id da primeira ntuple criada -- default = 0
-     analysisManager->SetFirstNtupleId(1);
+    analysisManager->SetFirstNtupleId(1);
     // //Declara ntuples (descobrir oque é)
     analysisManager->CreateNtuple("t1", "data");
     analysisManager->CreateNtupleDColumn("detPhotons1");

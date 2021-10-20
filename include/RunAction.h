@@ -2,6 +2,7 @@
 #include "G4UserRunAction.hh"
 #include "G4NeutronHPManager.hh"
 #include "G4Timer.hh"
+#include "g4root.hh"
 
 using namespace std;
 

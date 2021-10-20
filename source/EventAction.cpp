@@ -2,7 +2,6 @@
 #include "../include/RunAction.h"
 #include "../include/Constants.h"
 
-#include "G4Event.hh"
 #include "G4RunManager.hh"
 #include "G4Event.hh"
 #include "G4UnitsTable.hh"

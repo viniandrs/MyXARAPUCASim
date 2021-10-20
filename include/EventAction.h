@@ -14,14 +14,13 @@ class EventAction : public G4UserEventAction
 {
 public:
     
-    virtual void  BeginOfEventAction(const G4Event* event);
-    virtual void    EndOfEventAction(const G4Event* event);
+    virtual void  BeginOfEventAction(const G4Event* event) override;
+    virtual void    EndOfEventAction(const G4Event* event) override;
     
     
 public:
 
-    //Data members to hold information
-
+    //Data members to hold information (???) Talvez não seja necessário
     G4int nOfReflections;
     G4int nOfDetections;
 };

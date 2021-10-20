@@ -2,6 +2,7 @@
 using namespace std;
 
 //User Action classes
+#include "include/SteppingAction.h"
 #include "include/RunAction.h"
 #include "include/EventAction.h"
 
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
     runManager->SetUserAction(new RunAction());
     runManager->SetUserAction(new PrimaryGeneratorAction());
     runManager->SetUserAction(new EventAction());
-
+    runManager->SetUserAction(new SteppingAction);
     runManager->Initialize();
 
     //Initializing the visualization manager

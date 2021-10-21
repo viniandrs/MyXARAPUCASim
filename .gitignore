@@ -2,5 +2,6 @@ results.out
 .vscode/
 G4History.macro
 output.root
+build/
 	
 

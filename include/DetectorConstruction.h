@@ -1,7 +1,6 @@
 #pragma once
 
 #include "G4VUserDetectorConstruction.hh"
-#include "G4NistManager.hh"
 
 class Detector : public G4VUserDetectorConstruction
 {

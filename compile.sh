@@ -3,7 +3,6 @@
 # something like: /path/to/geant4-install/include/Geant4
 g++ main.cpp \
     source/DetectorConstruction.cpp \
-    source/EventAction.cpp \
     source/PrimaryGeneratorAction.cpp \
     source/RunAction.cpp \
     source/SteppingAction.cpp \

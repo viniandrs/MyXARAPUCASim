@@ -9,7 +9,7 @@ using namespace CLHEP;
 using namespace std;
 
 PrimaryGeneratorAction::PrimaryGeneratorAction() : G4VUserPrimaryGeneratorAction(), 
-                                                   m_newGun(new G4ParticleGun()) {} //Instantiating our particle gun
+m_newGun(new G4ParticleGun()) {} //Instantiating our particle gun
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
@@ -83,7 +83,4 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent)
 
     //Generating the event
     m_newGun->GeneratePrimaryVertex(anEvent);
-
-    flag_alpha = true;
-    flag_generate = true;
 }

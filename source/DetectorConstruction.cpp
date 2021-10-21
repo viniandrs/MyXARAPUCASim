@@ -10,6 +10,7 @@
 #include "G4SubtractionSolid.hh"
 #include "G4LogicalSkinSurface.hh"
 #include "CLHEP/Units/SystemOfUnits.h"
+#include "G4NistManager.hh"
 
 #include "G4MaterialPropertiesTable.hh"
 #include "G4VisAttributes.hh"

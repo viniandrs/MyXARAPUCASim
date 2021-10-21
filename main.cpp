@@ -4,7 +4,6 @@ using namespace std;
 //User Action classes
 #include "include/SteppingAction.h"
 #include "include/RunAction.h"
-#include "include/EventAction.h"
 
 //User Initialization classes
 #include "include/DetectorConstruction.h"
@@ -28,8 +27,6 @@ using namespace std;
 #include "G4OpticalPhysics.hh"
 #include "G4EmStandardPhysics_option2.hh"
 
-G4bool flag_generate = true;
-
 int main(int argc, char **argv)
 {
     G4RunManager *runManager = new G4RunManager;
@@ -50,7 +47,6 @@ int main(int argc, char **argv)
     runManager->SetUserInitialization(new Detector());
     runManager->SetUserAction(new RunAction());
     runManager->SetUserAction(new PrimaryGeneratorAction());
-    runManager->SetUserAction(new EventAction());
     runManager->SetUserAction(new SteppingAction);
     runManager->Initialize();
 

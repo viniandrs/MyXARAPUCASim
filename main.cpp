@@ -4,6 +4,8 @@ using namespace std;
 //User Action classes
 #include "include/SteppingAction.h"
 #include "include/RunAction.h"
+#include "include/TrackingAction.h"
+#include "include/EventAction.h"
 
 //User Initialization classes
 #include "include/DetectorConstruction.h"
@@ -48,6 +50,8 @@ int main(int argc, char **argv)
     runManager->SetUserAction(new RunAction());
     runManager->SetUserAction(new PrimaryGeneratorAction());
     runManager->SetUserAction(new SteppingAction);
+    runManager->SetUserAction(new TrackingAction);
+    runManager->SetUserAction(new EventAction);
     runManager->Initialize();
 
     //Initializing the visualization manager
@@ -56,19 +60,11 @@ int main(int argc, char **argv)
 
     //User interface
     auto *uiExecutive = new G4UIExecutive(argc, argv, "Qt");
+    auto *uiManager = G4UImanager::GetUIpointer();
 
-    //If the simulation is executed without any argument, it runs automatically in the interactive mode
-    if (argc == 1)
-    {
-        uiExecutive->SessionStart();
-    }
-    //Otherwise, the argument should be a macro file
-    else
-    {
-        auto *uiManager = G4UImanager::GetUIpointer();
-        uiManager->ApplyCommand("/control/execute " + G4String(argv[1]));
-        uiExecutive->SessionStart();
-    }
+    //Running the macro file passed as parameter 
+    uiManager->ApplyCommand("/control/execute " + G4String(argv[1]));
+    uiExecutive->SessionStart();
 
     delete uiExecutive;
     delete runManager;

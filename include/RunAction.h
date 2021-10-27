@@ -1,6 +1,5 @@
 #pragma once
 #include "G4UserRunAction.hh"
-#include "g4root.hh"
 
 using namespace std;
 

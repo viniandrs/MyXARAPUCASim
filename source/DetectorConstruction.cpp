@@ -362,17 +362,16 @@ G4VPhysicalVolume *Detector::Construct()
     //Alpha source support
 
     G4Box *SuporteAlphaBox = new G4Box("Suporte", 0.5 * largura, 0.5 * altura, 0.5 * esp_alpha);
-
-    G4Tubs *Buraco = new G4Tubs("buraco", 0, 0.5 * diam_buraco, 0.5 * (esp_alpha + 0.01 * cm), 0.0 * deg, 360 * deg);
+    G4Tubs *aluminum_alpha = new G4Tubs("aluminio_alpha", 0, 0.5 * diam_buraco, 0.5 * esp_aluminio, 0.0 * deg, 360 * deg);
 
     G4RotationMatrix *rotacao = new G4RotationMatrix(); //talvez de ruim pq não incluimos essa classe
     rotacao->rotateY(0. * deg);
     rotacao->rotateX(90. * deg);
     rotacao->rotateZ(180. * deg);
 
-    G4SubtractionSolid *Alpha = new G4SubtractionSolid("SuporteAlpha", SuporteAlphaBox, Buraco, 0, G4ThreeVector(0, 0, 0));
+    G4SubtractionSolid *AlphaSupport = new G4SubtractionSolid("SuporteAlpha", SuporteAlphaBox, aluminum_alpha, rotacao, pos6);
 
-    G4LogicalVolume *logicalAlpha = new G4LogicalVolume(Alpha, PVC, "logAlpha");
+    G4LogicalVolume *logicalAlpha = new G4LogicalVolume(AlphaSupport, PVC, "logAlpha");
 
     G4VPhysicalVolume *physAlpha = new G4PVPlacement(rotacao,        //no rotation
                                                      pos7,           //at position
@@ -387,8 +386,6 @@ G4VPhysicalVolume *Detector::Construct()
 
     //Alpha source itself
 
-    G4Tubs *aluminum_alpha = new G4Tubs("alumino_alpha", 0, 0.5 * diam_buraco - 0.001 * cm, 0.5 * esp_aluminio, 0.0 * deg, 360 * deg);
-
     G4LogicalVolume *logical_aluminum_alpha = new G4LogicalVolume(aluminum_alpha, Aluminium, "logAluminio");
 
     G4VPhysicalVolume *phys_Alpha_aluminio = new G4PVPlacement(rotacao,                //no rotation
@@ -399,25 +396,6 @@ G4VPhysicalVolume *Detector::Construct()
                                                                true,                   //no boolean operation
                                                                0,                      //copy number
                                                                true);
-
-    fScoringVolume = logical_aluminum_alpha;
-
-    //A cover to the back of the alpha source
-
-    G4Tubs *cover = new G4Tubs("cover", 0, 0.5 * diam_buraco, 0.5 * esp_aluminio + 1.0 * mm, 0.0 * deg, 360 * deg);
-
-    G4LogicalVolume *logical_tampa = new G4LogicalVolume(cover, PVC, "logTampa");
-
-    G4VPhysicalVolume *alpha_cover = new G4PVPlacement(rotacao,       //no rotation
-                                                       pos10,         //at position
-                                                       logical_tampa, //its logical volume
-                                                       "tampa",       //its name
-                                                       logicWorld,    //its mother  volume
-                                                       true,          //no boolean operation
-                                                       0,             //copy number
-                                                       true);
-
-    fScoringVolume = logical_tampa;
 
     //Filling the space between the cyllinders with liquid nitrogen
 
@@ -446,8 +424,7 @@ G4VPhysicalVolume *Detector::Construct()
     G4SubtractionSolid *sub4 = new G4SubtractionSolid("sub4", sub3, Detector1, 0, trans11);
     G4SubtractionSolid *sub5 = new G4SubtractionSolid("sub5", sub4, Detector2, 0, trans12);
     G4SubtractionSolid *sub6 = new G4SubtractionSolid("sub6", sub5, aluminum_alpha, rotacao, trans8);
-    G4SubtractionSolid *sub7 = new G4SubtractionSolid("sub7", sub6, cover, rotacao, trans10);
-    G4SubtractionSolid *sub8 = new G4SubtractionSolid("sub8", sub7, Alpha, rotacao, trans9);
+    G4SubtractionSolid *sub7 = new G4SubtractionSolid("sub7", sub6, AlphaSupport, rotacao, trans9);
 
     //NÃO CONHEÇO ESSAS PROPRIEDADES, PEDIR AJUDA PARA OS PROFS
     //Adding optical properties to LAr
@@ -469,7 +446,7 @@ G4VPhysicalVolume *Detector::Construct()
 
     LAr->GetIonisation()->SetBirksConstant(0.0000001 * mm / MeV);
 
-    G4LogicalVolume *logical_LAr = new G4LogicalVolume(sub8, LAr, "logLAr");
+    G4LogicalVolume *logical_LAr = new G4LogicalVolume(sub7, LAr, "logLAr");
 
     G4VPhysicalVolume *physLAr = new G4PVPlacement(0,           //no rotation
                                                    pos9,        //at position
@@ -541,9 +518,6 @@ G4VPhysicalVolume *Detector::Construct()
 
     G4VisAttributes *Detector_color2 = new G4VisAttributes(G4Colour(0.4, 1.0, 0.7, 0.4));
     logicalDetector2->SetVisAttributes(Detector_color2);
-
-    G4VisAttributes *Tampa_color = new G4VisAttributes(G4Colour(1.0, 0, 0));
-    logical_tampa->SetVisAttributes(Tampa_color);
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     The End    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

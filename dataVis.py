@@ -8,7 +8,7 @@ lAr_spectrum = file.hEnergy
 
 #Creating the histogram from a TTree
 tree = file.alpha
-hPhGenFromTuple = ROOT.TH1I("hPhDetFromTuple", "Photons Detected per alpha", 250, 0, 7000)
+hPhGenFromTuple = ROOT.TH1I("hPhDetFromTuple", "Photons Detected per alpha", 200, 0, 5000)
 
 for alpha in tree:
     photonsDetected = alpha.photonsDetected
@@ -30,13 +30,13 @@ hPhGenFromTuple.GetYaxis().SetTitle("#")
 #Setup of the Canvas
 
 c1 = ROOT.TCanvas("c1", "Histograms", 1)
-c1.Divide(3,1)
+#c1.Divide(3,1)
 
-c1.cd(1)
-alpha_spectrum.Draw("HIST")
-c1.cd(2)
-lAr_spectrum.Draw("HIST")
-c1.cd(3)
+#c1.cd(1)
+#alpha_spectrum.Draw("HIST")
+#c1.cd(2)
+#lAr_spectrum.Draw("HIST")
+#c1.cd(3)
 hPhGenFromTuple.Draw("HIST")
 c1.Draw()
     

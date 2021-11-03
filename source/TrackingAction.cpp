@@ -25,6 +25,8 @@ void TrackingAction::PreUserTrackingAction(const G4Track *track)
         G4double photonEnergy = track->GetTotalEnergy() / eV;
         analysisManager->FillH1(0, photonEnergy);
     }
+
+    
 }
 
 void TrackingAction::PostUserTrackingAction(const G4Track *track)

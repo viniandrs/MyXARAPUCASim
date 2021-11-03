@@ -1,8 +1,10 @@
 #include "../include/PrimaryGeneratorAction.h"
-#include "G4Geantino.hh"
+#include "../include/EventInformation.h"
+
+#include "G4EventManager.hh"
 #include "Randomize.hh"
 #include "G4ParticleTable.hh"
-
+#include "g4root.hh"
 #include "CLHEP/Units/SystemOfUnits.h"
 
 using namespace CLHEP;

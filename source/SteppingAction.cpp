@@ -36,6 +36,13 @@ void SteppingAction::UserSteppingAction(const G4Step *aStep)
     //Alpha spectrum
     if (particle == "alpha")
     {
+        //Registering the particle starting position
+        G4VUserEventInformation *eventInformationBaseClass = G4EventManager::GetEventManager()->GetUserInformation();
+        EventInformation *eventInformation = static_cast<EventInformation *>(eventInformationBaseClass);
+
+        //eventInformation->x0 = x0;
+        //eventInformation->y0 = y0;
+        //eventInformation->z0 = z0;
 
         if (PreVolName == "aluminumAlphaSource" && PostVolName == "Argon")
         {

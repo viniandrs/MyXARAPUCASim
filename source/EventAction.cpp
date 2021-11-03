@@ -20,12 +20,15 @@ void EventAction::EndOfEventAction(const G4Event *){
     G4VUserEventInformation *eventInformationBaseClass = G4EventManager::GetEventManager()->GetUserInformation();
     EventInformation *eventInformation = static_cast<EventInformation *>(eventInformationBaseClass);
 
-    if(eventInformation->GetPhotonsGenerated() == 0 || eventInformation->GetIsAlphaValid() == false) return;
+    if(eventInformation->GetPhotonsGenerated() == 0 ||
+       eventInformation->GetPhotonsDetected() == 0 || 
+       eventInformation->GetIsAlphaValid() == false) return;
     
     //Fill the NTuple and the histogram
     analysisManager->FillNtupleIColumn(0, eventInformation->GetPhotonsGenerated());
     analysisManager->FillNtupleIColumn(1, eventInformation->GetPhotonsDetected());
+    analysisManager->FillNtupleFColumn(2, eventInformation->x0);
+    analysisManager->FillNtupleFColumn(3, eventInformation->y0);
+    analysisManager->FillNtupleFColumn(4, eventInformation->z0);
     analysisManager->AddNtupleRow();
-
-    analysisManager->FillH1(2, eventInformation->GetPhotonsDetected());
 }

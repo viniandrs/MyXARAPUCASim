@@ -6,12 +6,14 @@ using namespace std;
 #include "include/RunAction.h"
 #include "include/TrackingAction.h"
 #include "include/EventAction.h"
+#include "include/ActionInitialization.h"
 
 //User Initialization classes
 #include "include/DetectorConstruction.h"
 #include "include/PrimaryGeneratorAction.h"
 
 #include "G4RunManager.hh"
+#include "G4MTRunManager.hh"
 #include "G4ScoringManager.hh"
 
 //User Interface classes
@@ -31,7 +33,11 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    G4RunManager *runManager = new G4RunManager;
+    #ifdef G4MULTITHREADED
+        G4MTRunManager *runManager = new G4MTRunManager();
+    #else
+        G4RunManager *runManager = new G4RunManager();
+    #endif
 
     // Physics list setup
     G4VModularPhysicsList *physicsList = new FTFP_BERT;
@@ -47,12 +53,8 @@ int main(int argc, char **argv)
 
     //User action and initialization classes
     runManager->SetUserInitialization(new Detector());
-    runManager->SetUserAction(new RunAction());
-    runManager->SetUserAction(new PrimaryGeneratorAction());
-    runManager->SetUserAction(new SteppingAction);
-    runManager->SetUserAction(new TrackingAction);
-    runManager->SetUserAction(new EventAction);
-    runManager->Initialize();
+    runManager->SetUserInitialization(new ActionInitialization());
+    //runManager->Initialize();
 
     //Initializing the visualization manager
     auto *visManager = new G4VisExecutive();

@@ -26,7 +26,17 @@ void TrackingAction::PreUserTrackingAction(const G4Track *track)
         analysisManager->FillH1(0, photonEnergy);
     }
 
-    
+    /* Obtaining alpha's starting location */
+
+    if (particleName == "alpha")
+    {
+        auto *eventInformationBaseClass = G4EventManager::GetEventManager()->GetUserInformation();
+        auto *eventInformation = static_cast<EventInformation *>(eventInformationBaseClass);
+
+        eventInformation->x0 = track->GetPosition().x();
+        eventInformation->y0 = track->GetPosition().y();
+        eventInformation->z0 = track->GetPosition().z();
+    }
 }
 
 void TrackingAction::PostUserTrackingAction(const G4Track *track)

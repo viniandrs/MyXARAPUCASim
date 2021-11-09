@@ -1,3 +1,9 @@
+# Change the default number of threads (in multi-threaded mode)
+/run/numberOfThreads 4
+#
+# Initialize kernel
+/run/initialize
+#
 ############################################################
 #                      VIS CONFIG                          #
 ############################################################
@@ -50,7 +56,7 @@
 #/vis/set/colour red
 #/vis/set/lineWidth 2
 #/vis/scene/add/frame   # Simple frame around the view
-/vis/set/colour        # Revert to default colour (white)valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=valgrind-out.txt ./mainver
+/vis/set/colour        # Revert to default colour (white)
 /vis/set/lineWidth     # Revert to default line width (1.)
 #
 # Attach text to one edge of Shape1, with a small, fixed offset
@@ -81,12 +87,6 @@
 /run/verbose 0
 /event/verbose 0
 /tracking/verbose 0
-#
-# Change the default number of threads (in multi-threaded mode)
-#/run/numberOfThreads 4
-#
-# Initialize kernel
-#/run/initialize
 #
 #/run/beamOn 10000
 

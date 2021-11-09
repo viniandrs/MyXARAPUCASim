@@ -20,7 +20,7 @@ void RunAction::BeginOfRunAction(const G4Run *)
     analysisManager->CreateH1("hEnergy", "Energy of scintillation photon", 2000, 4, 16); //0 Liquid Argon scintillation spectrum
     analysisManager->CreateH1("hAlpha", "Alpha Spectrum", 100, -1.0, 6.0);               //1
 
-    // //NTuples
+    // //NTuple
     analysisManager->SetFirstNtupleId(0);
     analysisManager->CreateNtuple("alpha", "Alpha particles data"); //NTuple 0: alpha data
     analysisManager->CreateNtupleIColumn("photonsGenerated");//0

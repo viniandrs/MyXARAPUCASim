@@ -7,12 +7,12 @@ for file_name in os.listdir("build/"):
     if "output" in file_name:
         number_of_files = number_of_files + 1
 
+# Building a chain with all the output files
 chain = ROOT.TChain("alpha", "CompleteOutput")
-
 for i in range(number_of_files):
     chain.Add("build/output_t"+str(i)+".root")
 
-# Creating the histogram from a TTree
+# Creating the histogram from a TTree (TChain)
 hPhGenFromTuple = ROOT.TH1I(
     "hPhDetFromTuple", "Photons Detected per alpha", 200, 0, 5000)
 

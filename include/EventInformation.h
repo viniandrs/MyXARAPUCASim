@@ -19,6 +19,7 @@ public:
     inline G4int GetPhotonsGenerated() { return photonsGenerated; }
     inline G4int GetIsAlphaValid() { return validAlpha; }
 
+public:
     G4float x0, y0, z0;
     G4int photonsGenerated, photonsDetected;
     G4bool validAlpha;

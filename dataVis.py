@@ -1,23 +1,31 @@
 import ROOT
+import os
 
-file = ROOT.TFile("build/final_output.root")
+# Counting the amount of output files
+number_of_files = 0
+for file_name in os.listdir("build/"):
+    if "output" in file_name:
+        number_of_files = number_of_files + 1
 
-#Creating the histogram from a TTree
-tree = file.alpha
-hPhGenFromTuple = ROOT.TH1I("hPhDetFromTuple", "Photons Detected per alpha", 200, 0, 5000)
+chain = ROOT.TChain("alpha", "CompleteOutput")
 
-for alpha in tree:
+for i in range(number_of_files):
+    chain.Add("build/output_t"+str(i)+".root")
+
+# Creating the histogram from a TTree
+hPhGenFromTuple = ROOT.TH1I(
+    "hPhDetFromTuple", "Photons Detected per alpha", 200, 0, 5000)
+
+for alpha in chain:
     photonsDetected = alpha.photonsDetected
     hPhGenFromTuple.Fill(photonsDetected)
 
-#Editing histograms
+# Editing histograms
 hPhGenFromTuple.GetXaxis().SetTitle("Photons/Alpha")
 hPhGenFromTuple.GetYaxis().SetTitle("#")
 
-#Setup of the Canvas
+# Setup of the Canvas
 
 c1 = ROOT.TCanvas("c1", "Histograms", 1)
 hPhGenFromTuple.Draw("HIST")
 c1.Draw()
-    
-
